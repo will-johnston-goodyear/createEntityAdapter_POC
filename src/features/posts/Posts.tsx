@@ -62,8 +62,9 @@ const Posts = () => {
 					<PostsWrapper>
 						{postIds?.length && (
 							postIds.map(postId => {
-								if (postEntities[postId]) {
-									let targetPost = postEntities[postId];
+								if (postEntities.posts[postId]) {
+									let targetPost = postEntities.posts[postId];
+									console.log(targetPost)
 									return (
 										<Post>
 											<PostTitle>{targetPost.title}</PostTitle>
@@ -71,7 +72,7 @@ const Posts = () => {
 											<PostBody>
 												<p>{targetPost.body}</p>
 											</PostBody>
-											<Comments comments={targetPost.comments}/>
+											<Comments />
 										</Post>
 									)
 								}
@@ -135,25 +136,27 @@ type CommentsProps = {
 	comments: Comment[],
 }
 
-const Comments = ({ comments} : CommentsProps) => {
+const Comments = ()  => {
 
-	const { entities: commentAuthors = {}, ids: commentAuthorIds } = useAppSelector((state) => state.posts.commentAuthors);
-	;
+	// const { entities: commentAuthors = {}, ids: commentAuthorIds } = useAppSelector((state) => state.posts.commentAuthors);
+	// ;
 
-	return (
-		<CommentsWrapper>
-			<PostTitle>Comments</PostTitle>
-			{commentAuthors && comments.map(comment => {
-				return (
-					<CommentCard>
-						"{comment.body}"
-						<CommentAuthor>
-							<span>- {commentAuthors[comment.commenter.commenter_id]?.userName}</span>
-						</CommentAuthor>
-					</CommentCard>
-				)
-			})}
-		</CommentsWrapper>
-	)
+	return <span>Comments</span>
+	// return (
+	// 	<CommentsWrapper>
+	// 		<PostTitle>Comments</PostTitle>
+	// 		{commentAuthors && comments.map(comment => {
+	// 			return (
+	// 				<CommentCard>
+	// 					"{comment.body}"
+	// 					<CommentAuthor>
+	// 						{/*@ts-ignore*/}
+	// 						<span>- {commentAuthors[comment.commenter.commenter_id]?.userName}</span>
+	// 					</CommentAuthor>
+	// 				</CommentCard>
+	// 			)
+	// 		})}
+	// 	</CommentsWrapper>
+	// )
 }
 export default Posts;

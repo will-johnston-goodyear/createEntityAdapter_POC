@@ -23,7 +23,7 @@ export interface Post {
 }
 
 interface NormalizedStateItem {
-	entities?: { [key: string]: Post },
+	entities?: { [key: string]: any },
 	ids?: Array<string>
 }
 
