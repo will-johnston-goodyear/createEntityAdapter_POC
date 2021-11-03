@@ -1,3 +1,14 @@
+html,
+.root{
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	color: white;
+	font-family: sans-serif;
+	font-size: 12pt;
+	box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }

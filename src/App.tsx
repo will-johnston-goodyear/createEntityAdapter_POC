@@ -1,45 +1,72 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import * as React from 'react';
+import './App.css';
+import { createServer } from 'miragejs'
+//@ts-ignore
+import Posts from './features/posts/Posts'
 
-function App() {
-  const [count, setCount] = useState(0)
+let server = createServer({})
+server.get("/posts", {
+	//@ts-ignore
+	posts: [
+		{
+			id: "001",
+			title: "The first post!",
+			author: {
+				id: "001",
+				userName: "wijohnst"
+			},
+			body: "This is the first blog post.",
+			comments: [
+				{
+					comment_id: "001",
+					commenter: { commenter_id: "002", userName: "Opal_Tatertot" },
+					body: "This is a comment on post 001"
+				},
+				{
+					comment_id: "004",
+					commenter: { commenter_id: "003", userName: "j.hypes" },
+					body: "This is another comment on post 001"
+				},
+			]
+		},
+		{
+			id: "002",
+			title: "The second post!",
+			author: {
+				id: "001",
+				userName: "wijohnst"
+			},
+			body: "This is the second blog post.",
+			comments: [
+				{
+					comment_id: "002",
+					commenter: { commenter_id: "002", userName: "Opal_Tatertot" },
+					body: "This is a comment on post 002"
+				},
+			]
+		},
+		{
+			id: "003",
+			title: "The third post!",
+			author: {
+				id: "002",
+				userName: "Opal_Tatertot"
+			},
+			body: "This is the third blog post.",
+			comments: [
+				{
+					comment_id: "003",
+					commenter: { commenter_id: "001", userName: "wijohnst" },
+					body: "This is a comment on post 003"
+				},
+			]
+		},
+	]
+})
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+const App = () => {
+
+	return <Posts />
 }
 
-export default App
+export default App;
