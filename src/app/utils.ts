@@ -22,17 +22,11 @@ export const normalizePostsResponse = (response: { posts: Post[] }): NormalizedP
 		}
 	)
 
-	// const users = new schema.Entity('users', {
-	// 	authors: authors,
-	// 	commenters: commentAuthors,
-	// })
-
 	const user = new schema.Entity('users', undefined, {
 		idAttribute: 'id'
 	});
 	
-	
-	const comments = new schema.Entity(
+		const comments = new schema.Entity(
 		'comments',
 		{
 			commenter: 	user,
