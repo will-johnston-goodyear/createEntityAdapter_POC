@@ -16,7 +16,7 @@ export interface Post {
 	comments: Comment[],
 }
 
-interface NormalizedStateItem {
+export interface NormalizedStateItem {
 	entities?: { [key: string]: any },
 	ids?: Array<string>
 }
@@ -24,4 +24,11 @@ interface NormalizedStateItem {
 // Normalized State
 export interface NormalizedPostsState {
 	[key: string] : NormalizedStateItem
+}
+export interface NormalizedComment {
+	[key: string]: {
+		comment_id: string,
+		commenter: string,
+		body: string,
+	}
 }

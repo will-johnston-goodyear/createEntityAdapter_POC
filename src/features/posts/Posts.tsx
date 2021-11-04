@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useGetPostsQuery } from '../../app/services/posts';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { User, Comment } from '../../app/sharedTypes'
+import { User, Comment, NormalizedComment } from '../../app/sharedTypes'
 
 import { addPosts } from './postsSlice';
 
@@ -42,7 +42,7 @@ const PostBody = styled.section`
 const Posts = () => {
 
 	const dispatch = useAppDispatch()
-	const { entities: postEntities = {}, ids: postIds } = useAppSelector((state) => state.posts.posts);
+	const { entities: postEntities = {}, ids: postIds } = useAppSelector((state) => state.posts);
 	const { data, error, isLoading } = useGetPostsQuery(null);
 
 	/* 
@@ -146,7 +146,7 @@ type CommentsProps = {
 
 const Comments = ({ comments }: CommentsProps) => {
 
-	const { entities : postEntities } = useAppSelector(state => state.posts.posts)
+	const { entities : postEntities } = useAppSelector(state => state.posts)
 	return (
 		<CommentsWrapper>
 			<PostTitle>Comments</PostTitle>
