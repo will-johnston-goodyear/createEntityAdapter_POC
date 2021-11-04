@@ -3,6 +3,8 @@ import './App.css';
 import { createServer } from 'miragejs'
 //@ts-ignore
 import Posts from './features/posts/Posts'
+import Recipes from './features/recipes/Recipes'
+import { Post } from './app/sharedTypes'
 
 let server = createServer({})
 server.get("/posts", {
@@ -64,9 +66,54 @@ server.get("/posts", {
 	]
 })
 
+server.get("/recipes", {
+	//@ts-ignore
+	recipes: [
+		{
+			id: "001",
+			title: "Ice Water",
+			author: {
+				id: "001",
+				userName: "wijohnst"
+			},
+			body: "Combine ice with water and serve."
+		},
+		{
+			id: "002",
+			title: "Steam",
+			author: {
+				id: "002",
+				userName: "Opal_Tatertot"
+			},
+			body: "Heat water until gas and serve."
+		}
+	]
+})
+
 const App = () => {
 
-	return <Posts />
+	const [demo, setDemo] = React.useState('Recipes');
+
+	return (
+	<>
+		{
+			demo === 'Posts' && (
+				<>	
+					<Posts />
+					<button onClick={() => setDemo('Recipes')}>Recipes Demo</button>
+				</>
+			)
+		}
+		{
+			demo === 'Recipes' && (
+				<>
+					<Recipes />
+					<button onClick={() => setDemo('Posts')}>Posts Demo</button>
+				</>
+			)		
+		}
+		</>
+	)	
 }
 
 export default App;

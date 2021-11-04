@@ -32,3 +32,10 @@ export interface NormalizedComment {
 		body: string,
 	}
 }
+
+export interface Recipe {
+	id: string,
+	title: string,
+	author: User,
+	body: string, 
+}

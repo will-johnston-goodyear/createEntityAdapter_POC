@@ -1,22 +1,13 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
-import { NormalizedPostsState, NormalizedComment, NormalizedStateItem } from '../../app/sharedTypes'
+import { NormalizedPostsState, NormalizedStateItem } from '../../app/sharedTypes'
 
-
-// const initialState: NormalizedPostsState = {
-// 	posts: {
-// 		entities: {},
-// 		ids: [],
-// 	}
-// }
 const initialState: NormalizedStateItem = {
 		entities: {},
 		ids: [],
 }
 
 const postsAdapter = createEntityAdapter();
-
-console.log(postsAdapter);
 
 export const postsSlice = createSlice({
 	name: 'posts',

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { normalize, schema } from 'normalizr';
-import { normalizePostsResponse } from '../utils';
+import { normalizePostsResponse } from '../utils'
 import { Post, NormalizedPostsState } from '../sharedTypes'
 
 /*

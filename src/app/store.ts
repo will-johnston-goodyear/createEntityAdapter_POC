@@ -1,16 +1,17 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import counterReducer from '../features/counter/counterSlice'
+import { configureStore } from "@reduxjs/toolkit";
 import postsReducer from '../features/posts/postsSlice'
+import recipesReducer from '../features/recipes/recipesSlice'
 import { postsApi } from "./services/posts";
+import { recipesApi } from "./services/recipes";
 
 export const store = configureStore({
 	reducer: {
-		counter: counterReducer,
 		posts: postsReducer,
+		recipes: recipesReducer,
 		[postsApi.reducerPath]: postsApi.reducer,
+		[recipesApi.reducerPath]: recipesApi.reducer,
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postsApi.middleware)
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postsApi.middleware,recipesApi.middleware)
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
