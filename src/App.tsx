@@ -19,12 +19,12 @@ server.get("/posts", {
 			comments: [
 				{
 					comment_id: "001",
-					commenter: { commenter_id: "002", userName: "Opal_Tatertot" },
+					commenter: { id: "002", userName: "Opal_Tatertot" },
 					body: "This is a comment on post 001"
 				},
 				{
 					comment_id: "004",
-					commenter: { commenter_id: "003", userName: "j.hypes" },
+					commenter: { id: "003", userName: "j.hypes" },
 					body: "This is another comment on post 001"
 				},
 			]
@@ -40,7 +40,7 @@ server.get("/posts", {
 			comments: [
 				{
 					comment_id: "002",
-					commenter: { commenter_id: "002", userName: "Opal_Tatertot" },
+					commenter: { id: "002", userName: "Opal_Tatertot" },
 					body: "This is a comment on post 002"
 				},
 			]
@@ -56,7 +56,7 @@ server.get("/posts", {
 			comments: [
 				{
 					comment_id: "003",
-					commenter: { commenter_id: "001", userName: "wijohnst" },
+					commenter: { id: "001", userName: "wijohnst" },
 					body: "This is a comment on post 003"
 				},
 			]

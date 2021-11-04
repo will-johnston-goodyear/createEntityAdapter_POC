@@ -1,23 +1,17 @@
-export interface Author {
+export interface User {
 	id: string,
 	userName: string,
 }
-
-export interface Commenter {
-	commenter_id: string,
-	userName: string,
-}
-
 export interface Comment {
 	comment_id: string,
-	commenter: Commenter,
+	commenter: User,
 	body: string,
 }
 
 export interface Post {
 	id: string,
 	title: string,
-	author: Author
+	author: User,
 	body: string,
 	comments: Comment[],
 }

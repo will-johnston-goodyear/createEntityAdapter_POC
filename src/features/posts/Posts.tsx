@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useGetPostsQuery } from '../../app/services/posts';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { Author, Comment } from '../../app/sharedTypes'
+import { User, Comment } from '../../app/sharedTypes'
 
 import { addPosts } from './postsSlice';
 
@@ -40,10 +40,14 @@ const PostBody = styled.section`
 	font-size: 1.5rem;
 `
 const Posts = () => {
+
 	const dispatch = useAppDispatch()
 	const { entities: postEntities = {}, ids: postIds } = useAppSelector((state) => state.posts.posts);
 	const { data, error, isLoading } = useGetPostsQuery(null);
 
+	/* 
+		Listens for changes to data and sends to `postsSlice`. The `data` returned from the query hook is normalized before it is passed to the cache / the component layer. 
+	*/
 	React.useEffect(() => {
 		if (data) {
 			dispatch(addPosts(data))
@@ -64,15 +68,19 @@ const Posts = () => {
 							postIds.map(postId => {
 								if (postEntities.posts[postId]) {
 									let targetPost = postEntities.posts[postId];
-									console.log(targetPost)
 									return (
-										<Post>
+										<Post key={postId}>
 											<PostTitle>{targetPost.title}</PostTitle>
-											<PostSubtitle author={targetPost.author} />
+											{/* 
+												Instead of targeting the authors instance on `targetPost.author` (which is now just a key), we reference that key in the `users` lookup table. This decoupling is the goal of Normalized State. 
+											*/}
+											<PostSubtitle author={postEntities.users[targetPost.author]} />
 											<PostBody>
 												<p>{targetPost.body}</p>
 											</PostBody>
-											<Comments />
+											<Comments
+												comments={targetPost.comments.map((commentKey: string) => (postEntities.comments[commentKey]))}
+											/>
 										</Post>
 									)
 								}
@@ -91,7 +99,7 @@ const Posts = () => {
 }
 
 type SubtitleProps = {
-	author: Author, 
+	author: User, 
 }
 
 const SubtitleWrapper = styled.div`
@@ -136,27 +144,24 @@ type CommentsProps = {
 	comments: Comment[],
 }
 
-const Comments = ()  => {
+const Comments = ({ comments }: CommentsProps) => {
 
-	// const { entities: commentAuthors = {}, ids: commentAuthorIds } = useAppSelector((state) => state.posts.commentAuthors);
-	// ;
-
-	return <span>Comments</span>
-	// return (
-	// 	<CommentsWrapper>
-	// 		<PostTitle>Comments</PostTitle>
-	// 		{commentAuthors && comments.map(comment => {
-	// 			return (
-	// 				<CommentCard>
-	// 					"{comment.body}"
-	// 					<CommentAuthor>
-	// 						{/*@ts-ignore*/}
-	// 						<span>- {commentAuthors[comment.commenter.commenter_id]?.userName}</span>
-	// 					</CommentAuthor>
-	// 				</CommentCard>
-	// 			)
-	// 		})}
-	// 	</CommentsWrapper>
-	// )
+	const { entities : postEntities } = useAppSelector(state => state.posts.posts)
+	return (
+		<CommentsWrapper>
+			<PostTitle>Comments</PostTitle>
+			{comments.map(comment => {
+				return (
+					<CommentCard key={comment.comment_id}>
+						"{comment.body}"
+						<CommentAuthor>
+							{/*@ts-ignore*/}
+							<span>- {postEntities.users[comment.commenter].userName} </span>
+						</CommentAuthor>
+					</CommentCard>
+				)
+			})}
+		</CommentsWrapper>
+	)
 }
 export default Posts;
